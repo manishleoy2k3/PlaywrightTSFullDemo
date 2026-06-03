@@ -56,8 +56,9 @@ jobs:
           path: all-blobs/
           pattern: blob-report-*
           merge-multiple: true
-      - name: Merge Into Consolidated Report
-        run: npx playwright merge-reports ./all-blobs
+      - name: Merge Shard Reports
+        run: npx playwright merge-reports ./all-blobs --reporter=html --output=playwright-report
+
       - name: Generate HTML Report
         run: npx playwright show-report ./playwright-report
       - name: Upload Master Report           # ← ADD THIS
