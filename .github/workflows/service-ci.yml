@@ -31,7 +31,9 @@ jobs:
       - name: Launch Test Shard Container
         uses: docker://mcr.microsoft.com/playwright:v1.52.0-noble
         with:
-          args: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+          #args: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+          args: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --reporter=blob
+
       - name: Save Shard Results
         uses: actions/upload-artifact@v4
         if: always()
@@ -53,6 +55,8 @@ jobs:
           merge-multiple: true
       - name: Merge Into Consolidated Report
         run: npx playwright merge-reports ./all-blobs
+      - name: Generate HTML Report
+        run: npx playwright show-report ./playwright-report --reporter=html
       - name: Upload Master Report           # ← ADD THIS
         uses: actions/upload-artifact@v4     # ← ADD THIS
         if: always()                         # ← ADD THIS
