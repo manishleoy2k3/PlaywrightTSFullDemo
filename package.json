@@ -8,7 +8,9 @@
     "Suite": "npx playwright test --grep \"@SmokeTesting|@RegressionTesting\"",
     "SmokeTesting": "npx playwright test --grep @SmokeTesting",
     "RegressionTesting": "npx playwright test --grep @RegressionTesting",
-    "test": "playwright test"
+    "test": "playwright test",
+    "lint": "eslint .",
+    "test:unit": "jest"
   },
   "keywords": [],
   "author": "",
