@@ -10,6 +10,7 @@
       "outDir": "./dist",              // Output directory for compiled JavaScript files
       "rootDir": ".",              // Root directory for TypeScript files
       "resolveJsonModule": true,       // Allow importing of JSON files
+      "ignoreDeprecations": "6.0",
       "types": ["node", "playwright"], // Include the types for Node.js and Playwright
       "declaration": true,             // Generate .d.ts files for type declarations
       "sourceMap": true                // Generate source maps for easier debugging
