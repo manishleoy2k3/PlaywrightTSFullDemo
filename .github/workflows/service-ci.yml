@@ -58,9 +58,6 @@ jobs:
           merge-multiple: true
       - name: Merge Shard Reports
         run: npx playwright merge-reports ./all-blobs --reporter=html
-
-      - name: Generate HTML Report
-        run: npx playwright show-report ./playwright-report
       - name: Upload Master Report           # ← ADD THIS
         uses: actions/upload-artifact@v4     # ← ADD THIS
         if: always()                         # ← ADD THIS
