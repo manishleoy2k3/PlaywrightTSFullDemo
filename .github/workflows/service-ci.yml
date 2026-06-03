@@ -57,7 +57,7 @@ jobs:
           pattern: blob-report-*
           merge-multiple: true
       - name: Merge Shard Reports
-        run: npx playwright merge-reports ./all-blobs --reporter=html --output=playwright-report
+        run: npx playwright merge-reports ./all-blobs --reporter=html
 
       - name: Generate HTML Report
         run: npx playwright show-report ./playwright-report
