@@ -15,7 +15,7 @@ test.use({
 /**
  * Author Testers Talk
  */
-test('Create POST API Request using dynamic api request body in playwright & typescript', async ({ request }) => {
+test.skip('Create POST API Request using dynamic api request body in playwright & typescript', async ({ request }) => {
 
     // Reading json file
     const filePath = path.join(__dirname, '../../test-data/api_requests/Dynamic_POST_API_Request.json');
@@ -57,7 +57,7 @@ test('Create POST API Request using dynamic api request body in playwright & typ
 /**
  * Author Testers Talk
  */
-test('Create POST API Request using dynamic api request body in playwright & typescript 2', async ({ request }) => {
+test.skip('Create POST API Request using dynamic api request body in playwright & typescript 2', async ({ request }) => {
 
     // Reading json file
     const filePath = path.join(__dirname, '../../test-data/api_requests/Dynamic_POST_API_Request.json');

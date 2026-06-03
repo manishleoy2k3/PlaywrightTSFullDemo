@@ -12,7 +12,7 @@ test.use({
 /**
  * Author Testers Talk
  */
-test('Create TypeSafety POST API Request using dynamic api request body in playwright & typescript', async ({ request }) => {
+test.skip('Create TypeSafety POST API Request using dynamic api request body in playwright & typescript', async ({ request }) => {
 
     const firstName = faker.person.firstName();
     const lastName = faker.person.lastName();

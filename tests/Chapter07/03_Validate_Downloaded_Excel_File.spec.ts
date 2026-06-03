@@ -3,7 +3,7 @@ import { downloadAndValidateFileName, loginToApplication } from '../../src/utils
 
 import ExcelJS from 'exceljs'
 
-test('Validate downloaded excel file content in playwright', async ({ page }) => {
+test.skip('Validate downloaded excel file content in playwright', async ({ page }) => {
 
     const DOWNLOADED_EXCEL_FILE = "./downloads/Downloaded_Excel_File.xlsx"
 

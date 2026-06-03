@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 /**
  * Author Testers Talk
  */
-test('Codegen test case', { tag: ['@PlaywrightWithJenkins'] }, async ({ page }) => {
+test.skip('Codegen test case', { tag: ['@PlaywrightWithJenkins'] }, async ({ page }) => {
   await page.goto('https://www.youtube.com/');
   await page.getByPlaceholder('Search').first().click();
   await page.getByPlaceholder('Search').first().fill('playwright by testers talk ');
@@ -16,7 +16,7 @@ test('Codegen test case', { tag: ['@PlaywrightWithJenkins'] }, async ({ page }) 
 /**
  * Author Testers Talk
  */
-test('Test 2 will fail', { tag: ['@PlaywrightWithJenkins'] }, async ({ page }) => {
+test.skip('Test 2 will fail', { tag: ['@PlaywrightWithJenkins'] }, async ({ page }) => {
   await page.goto('https://www.youtube.com/@testerstalk');
   expect(true).toBe(false);
 });

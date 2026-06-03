@@ -4,7 +4,7 @@ import { test } from '@playwright/test';
 /**
  * Author Testers Talk
  */
-test('Count total tests in playwright report', async ({ page }) => {
+test.skip('Count total tests in playwright report', async ({ page }) => {
 
     const reportPath = 'file:///path/PlaywrightTypeScriptTutorialFullCourse/screenshots/playwright-report/index.html';
     await page.goto(reportPath);

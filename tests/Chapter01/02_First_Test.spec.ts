@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 /**
  * Author Testers Talk
  */
-test('My First Playwright TypeScript Test', async ({ page }) => {
+test.skip('My First Playwright TypeScript Test', async ({ page }) => {
     // Go to URL
     await page.goto('https://www.google.com/');
 

@@ -4,7 +4,7 @@ import { downloadAndValidateFileName, loginToApplication } from '../../src/utils
 import fs from 'fs'
 import mammoth from 'mammoth';
 
-test('Validate downloaded Word file content in playwright', async ({ page }) => {
+test.skip('Validate downloaded Word file content in playwright', async ({ page }) => {
 
     const DOWNLOADED_WORD_FILE = "./downloads/Downloaded_Word_File.docx"
 

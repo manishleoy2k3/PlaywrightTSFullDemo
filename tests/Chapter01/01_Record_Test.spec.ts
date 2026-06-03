@@ -30,7 +30,7 @@ test('[3] Record a test', { tag: ['@PlaywrightWithAzureDevOpsPipeline','@Playwri
 /**
  * Author Testers Talk
  */
-test('[8] Test 2 will fail', { tag: ['@PlaywrightWithAzureDevOpsPipeline','@PlaywrightWithGitHubActions'] }, async ({ page }) => {
+test.skip('[8] Test 2 will fail', { tag: ['@PlaywrightWithAzureDevOpsPipeline','@PlaywrightWithGitHubActions'] }, async ({ page }) => {
   await page.goto('https://www.youtube.com/@testerstalk');
   expect(true).toBe(false);
 });

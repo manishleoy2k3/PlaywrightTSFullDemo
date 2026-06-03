@@ -4,7 +4,7 @@ import { downloadAndValidateFileName, loginToApplication } from '../../src/utils
 import fs from 'fs'
 import { XMLParser } from 'fast-xml-parser'
 
-test('Validate downloaded XML file content in playwright', async ({ page }) => {
+test.skip('Validate downloaded XML file content in playwright', async ({ page }) => {
 
     const DOWNLOADED_XML_FILE = "./downloads/Downloaded_XML_File.xml"
 

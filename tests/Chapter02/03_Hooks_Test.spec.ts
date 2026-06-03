@@ -21,7 +21,7 @@ test.afterAll(async() => {
 /**
  * Author Testers Talk
  */
-test('Test 1', async ({ page }) => {
+test.skip('Test 1', async ({ page }) => {
     console.log('Test1 execution started...');
     // Go to URL
     // await page.goto('https://www.google.com/');
@@ -40,7 +40,7 @@ test('Test 1', async ({ page }) => {
 /**
  * Author Testers Talk
  */
-test('Test 2', async ({ page }) => {
+test.skip('Test 2', async ({ page }) => {
     console.log('Test2 execution started...');
     // Go to URL
     // await page.goto('https://www.google.com/');

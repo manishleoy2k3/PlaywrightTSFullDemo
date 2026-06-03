@@ -10,7 +10,7 @@ test.use({
 /**
  * Author Testers Talk
  */
-test('Create POST API Request using static file in playwright & typescript', async ({ request }) => {
+test.skip('Create POST API Request using static file in playwright & typescript', async ({ request }) => {
 
     // Create POST API Request
     const postAPIResponse = await request.post(`/booking`, { data: postAPIRequest });

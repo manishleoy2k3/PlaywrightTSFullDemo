@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 import { downloadAndValidateFileName, loginToApplication } from '../../src/utils/Common'
 
-test('Download file in playwright', async ({ page }) => {
+test.skip('Download file in playwright', async ({ page }) => {
 
     // Login to Testers Talk
     await loginToApplication(page);

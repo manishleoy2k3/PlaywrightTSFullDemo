@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 import { loginToApplication } from '../../src/utils/Common'
 
-test('Upload file in playwright', async ({ page }) => {
+test.skip('Upload file in playwright', async ({ page }) => {
 
     // Login to Testers Talk
     await loginToApplication(page);

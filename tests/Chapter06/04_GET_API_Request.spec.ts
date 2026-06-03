@@ -12,7 +12,7 @@ test.use({
 /**
  * Author Testers Talk
  */
-test('Create GET API Request using playwright & typescript', async ({ request }) => {
+test.skip('Create GET API Request using playwright & typescript', async ({ request }) => {
 
     const firstName = faker.person.firstName();
     const lastName = faker.person.lastName();

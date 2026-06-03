@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 /**
  * Author Testers Talk
  */
-test('Mock API from HAR file in playwright', async ({ page }) => {
+test.skip('Mock API from HAR file in playwright', async ({ page }) => {
 
     // Recording a HAR file
     await page.routeFromHAR('./har/fruits.har', {

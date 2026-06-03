@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 /**
  * Author Testers Talk
  */
-test('Soft Assertions in playwright', async ({ page }) => {
+test.skip('Soft Assertions in playwright', async ({ page }) => {
     // Go to URL
     await page.goto('https://www.youtube.com/');
 

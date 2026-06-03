@@ -64,3 +64,19 @@ jobs:
         with:                                # ← ADD THIS
           name: master-report                # ← ADD THIS
           path: playwright-report/           # ← ADD THIS
+  
+  deploy-report:
+    needs: compile-master-report
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: master-report
+          path: playwright-report
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: playwright-report

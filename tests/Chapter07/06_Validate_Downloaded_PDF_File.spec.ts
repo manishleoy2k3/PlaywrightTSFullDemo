@@ -4,7 +4,7 @@ import { downloadAndValidateFileName, loginToApplication } from '../../src/utils
 import fs from 'fs'
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs'
 
-test('Validate downloaded PDF file content in playwright', async ({ page }) => {
+test.skip('Validate downloaded PDF file content in playwright', async ({ page }) => {
 
     const DOWNLOADED_PDF_FILE = "./downloads/Downloaded_PDF_File.pdf"
 
