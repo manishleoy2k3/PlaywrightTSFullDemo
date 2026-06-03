@@ -1,9 +1,9 @@
 name: Payment Service Pipeline
 
 on:
-  pull_request:
-    paths:
-      - 'apps/payment-service/**' # Path filtering: Triggers ONLY on relevant changes
+  #pull_request:
+   # paths:
+    #  - 'apps/payment-service/**' # Path filtering: Triggers ONLY on relevant changes
   workflow_dispatch:  # ← Add this
   
 jobs:
