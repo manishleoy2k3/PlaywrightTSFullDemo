@@ -63,10 +63,10 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    // {
-    //   name: 'chromium',
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
+     {
+       name: 'chromium',
+       use: { browserName: 'chromium' },
+     },
 
     // {
     //   name: 'firefox',
@@ -93,15 +93,7 @@ export default defineConfig({
     //   name: 'Microsoft Edge',
     //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
     // },
-    {
-      name: 'Google Chrome',
-      use: {
-        ...devices['Desktop Chrome'],
-        channel: 'chrome',
-        viewport : { width: 1440, height:900 },
-        //storageState: '/storage-state/StorageState.json' 
-      }
-    },
+    
   ],
 
   /* Run your local dev server before starting the tests */
