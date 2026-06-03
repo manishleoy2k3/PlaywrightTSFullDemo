@@ -1,5 +1,6 @@
 name: Payment Service Pipeline
-
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 on:
   #pull_request:
    # paths:
@@ -58,7 +59,7 @@ jobs:
       - name: Merge Into Consolidated Report
         run: npx playwright merge-reports ./all-blobs
       - name: Generate HTML Report
-        run: npx playwright show-report ./playwright-report --reporter=html
+        run: npx playwright show-report ./playwright-report
       - name: Upload Master Report           # ← ADD THIS
         uses: actions/upload-artifact@v4     # ← ADD THIS
         if: always()                         # ← ADD THIS
