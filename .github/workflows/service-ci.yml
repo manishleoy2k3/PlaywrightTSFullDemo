@@ -1,0 +1,61 @@
+name: Payment Service Pipeline
+
+on:
+  pull_request:
+    paths:
+      - 'apps/payment-service/**' # Path filtering: Triggers ONLY on relevant changes
+  workflow_dispatch:  # ← Add this
+  
+jobs:
+  pre-flight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint && npm run test:unit
+
+  playwright-shards:
+    needs: pre-flight
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Launch Test Shard Container
+        uses: docker://mcr.microsoft.com/playwright:v1.52.0-noble
+        with:
+          args: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - name: Save Shard Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: blob-report-${{ matrix.shardIndex }}
+          path: blob-report/
+
+  compile-master-report:
+    needs: playwright-shards
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download All Blob Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-blobs/
+          pattern: blob-report-*
+          merge-multiple: true
+      - name: Merge Into Consolidated Report
+        run: npx playwright merge-reports ./all-blobs
+      - name: Upload Master Report           # ← ADD THIS
+        uses: actions/upload-artifact@v4     # ← ADD THIS
+        if: always()                         # ← ADD THIS
+        with:                                # ← ADD THIS
+          name: master-report                # ← ADD THIS
+          path: playwright-report/           # ← ADD THIS

@@ -1,0 +1,53 @@
+trigger:
+  - main
+
+# schedules:
+#   - cron: "30 3 * * 1-5"
+#     displayName: Weekday Build Auto Trigger
+#     branches:
+#       include:
+#         - main
+#     always: true
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "18"
+    displayName: "Install Node.js"
+
+  #    workingDirectory: "$(Build.SourcesDirectory)/FolderNameInAny"
+
+  - script: npm ci
+    displayName: "npm ci"
+
+  - script: npx playwright install --with-deps
+    displayName: "Install Playwright browsers"
+
+  - script: npx playwright test --grep PlaywrightWithAzureDevOpsPipeline
+    displayName: "Run Playwright tests"
+    env:
+      CI: "true"
+
+  - script: npx ts-node src/utils/RunUpdate.ts
+    displayName: "Update Test Plan Test Case Status"
+    condition: always()
+
+  - task: PublishTestResults@2
+    displayName: "Publish test results"
+    inputs:
+      testResultsFormat: "JUnit"
+      testResultsFiles: "junit-test-report.xml"
+      mergeTestResults: true
+      failTaskOnFailedTests: true
+      testRunTitle: "My End-To-End Tests"
+    condition: succeededOrFailed()
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: playwright-report
+      artifact: playwright-report
+      publishLocation: "pipeline"
+    condition: succeededOrFailed()

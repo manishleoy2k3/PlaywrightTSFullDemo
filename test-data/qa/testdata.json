@@ -1,0 +1,20 @@
+{
+    "TestDataSet1": {
+        "Skill1": "Playwright by Testers Talk",
+        "Skill2": "Cypress by Testers Talk",
+        "Skill3": "JavaScript by Testers Talk",
+        "Skill4": "API Testing by Testers Talk",
+        "Skill5": "Postman by Testers Talk",
+        "Skill6": "Rest Assured by Testers Talk",
+        "Skill7": "SpecFow by Testers Talk"
+    },
+    "TestDataSet2": {
+        "Skill1": "SpecFow by Testers Talk",
+        "Skill2": "Rest Assured by Testers Talk",
+        "Skill3": "Postman by Testers Talk",
+        "Skill4": "API Testing by Testers Talk",
+        "Skill5": "JavaScript by Testers Talk",
+        "Skill6": "Cypress by Testers Talk",
+        "Skill7": "Playwright by Testers Talk"
+    }
+}

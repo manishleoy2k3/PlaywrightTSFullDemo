@@ -1,0 +1,37 @@
+{
+  "name": "playwrighttypescripttutorialfullcourse",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "DataDrivenTesting": "npx playwright test --grep @DataDrivenTesting",
+    "Suite": "npx playwright test --grep \"@SmokeTesting|@RegressionTesting\"",
+    "SmokeTesting": "npx playwright test --grep @SmokeTesting",
+    "RegressionTesting": "npx playwright test --grep @RegressionTesting",
+    "test": "playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.9.3",
+    "allure-playwright": "^3.0.7",
+    "eslint": "^10.4.1",
+    "eslint-plugin-playwright": "^2.10.4",
+    "typescript-eslint": "^8.60.1"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.4.0",
+    "axios": "^1.7.9",
+    "csv-parse": "^5.6.0",
+    "dotenv": "^16.4.7",
+    "exceljs": "^3.4.0",
+    "fast-xml-parser": "^5.3.3",
+    "mammoth": "^1.11.0",
+    "pdfjs-dist": "^5.4.530",
+    "xlsx": "^0.18.5"
+  }
+}

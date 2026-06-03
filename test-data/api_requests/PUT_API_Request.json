@@ -1,0 +1,11 @@
+{
+    "firstname": "cypress by testers talk",
+    "lastname": "javascript by testers talk",
+    "totalprice": 1000,
+    "depositpaid": true,
+    "bookingdates": {
+        "checkin": "2025-01-15",
+        "checkout": "2025-01-17"
+    },
+    "additionalneeds": "breakfast"
+}

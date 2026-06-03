@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+        environment {
+            NODE_HOME = tool name: 'nodejs', type: 'NodeJS'  // This must match the name in Global Tool Configuration
+            PATH = "${NODE_HOME}/bin:${env.PATH}"
+        }
+
+        stages {
+
+        stage('Check Node.js Version') {
+            steps {
+                sh 'node -v'    // Verify the Node.js version
+                sh 'npm -v'     // Verify the npm version
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm ci'
+                sh 'npx playwright install --with-deps'
+            }
+        }
+        
+        stage('Run Playwright Tests') {
+            steps {
+                sh 'npx playwright test --grep PlaywrightWithJenkins'  // You can specify browsers or configurations
+            }
+        }
+    }
+}
