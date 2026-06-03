@@ -40,7 +40,7 @@ test.skip('Test 2', async ({ page }) => {
 /**
  * Author Testers Talk
  */
-test.only('Test 3', async ({ page }) => {
+test('Test 3', async ({ page }) => {
     // Go to URL
     await page.goto('https://www.google.com/');
 
