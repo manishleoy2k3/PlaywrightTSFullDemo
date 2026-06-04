@@ -3,11 +3,11 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # Ensure Node.js 24 for any JavaScript-based actions
 
 on:
-  #pull_request:
-   # branches: [ main ]
-    #paths:
-     # - 'src/**' # Trigger only on application or test changes
-      #- 'performance/**'
+  pull_request:
+    branches: [ master, main ]
+    paths:
+      - 'src/**' # Trigger only on application or test changes
+      - 'performance/**'
   workflow_dispatch:  # ← Add this
 jobs:
   performance-benchmark:
@@ -33,7 +33,11 @@ jobs:
       - name: Execute Headless JMeter Script
         run: |
           # -n: Headless mode | -t: Target script | -l: Log results destination
-          jmeter -n -t performance/api_benchmark.jmx -l performance/results.jtl
+          jmeter -n -t performance/api_benchmark.jmx -l performance/results.jtl -j performance/jmeter.log \
+            -Djmeter.save.saveservice.output_format=csv \
+            -Djmeter.save.saveservice.response_data.on_error=false \
+            -Djmeter.save.saveservice.response_data=false \
+            -Djmeter.save.saveservice.samplerData=false
 
       - name: Generate Markdown Performance Report
         id: perf_reporter
@@ -55,8 +59,8 @@ jobs:
               reader = csv.DictReader(f)
               for row in reader:
                   total_count += 1
-                  latencies.append(int(row['elapsed']))
-                  if row['success'] == 'true':
+                  latencies.append(int(row['Latency']))
+                  if row['success'].lower() == 'true':  # Make it case-insensitive
                       success_count += 1
 
           latencies.sort()
