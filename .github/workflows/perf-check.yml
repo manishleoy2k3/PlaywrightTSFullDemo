@@ -1,0 +1,88 @@
+name: Shift-Left Performance Regression Gate Using JMeter
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # Ensure Node.js 24 for any JavaScript-based actions
+
+on:
+  #pull_request:
+   # branches: [ main ]
+    #paths:
+     # - 'src/**' # Trigger only on application or test changes
+      #- 'performance/**'
+  workflow_dispatch:  # ← Add this
+jobs:
+  performance-benchmark:
+    runs-on: ubuntu-latest # Change to 'self-hosted' if running on a local machine agent
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Java Runtime (Required for JMeter)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install Apache JMeter
+        run: |
+          wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz
+          tar -xzf apache-jmeter-5.6.3.tgz
+          echo "JM_HOME=$GITHUB_WORKSPACE/apache-jmeter-5.6.3" >> $GITHUB_ENV
+          echo "$GITHUB_WORKSPACE/apache-jmeter-5.6.3/bin" >> $GITHUB_PATH
+
+      - name: Execute Headless JMeter Script
+        run: |
+          # -n: Headless mode | -t: Target script | -l: Log results destination
+          jmeter -n -t performance/api_benchmark.jmx -l performance/results.jtl
+
+      - name: Generate Markdown Performance Report
+        id: perf_reporter
+        run: |
+          python3 - << 'EOF'
+          import csv
+          import os
+
+          jtl_path = "performance/results.jtl"
+          if not os.path.exists(jtl_path):
+              print("Error: Results file missing.")
+              exit(1)
+
+          latencies = []
+          success_count = 0
+          total_count = 0
+
+          with open(jtl_path, mode='r') as f:
+              reader = csv.DictReader(f)
+              for row in reader:
+                  total_count += 1
+                  latencies.append(int(row['elapsed']))
+                  if row['success'] == 'true':
+                      success_count += 1
+
+          latencies.sort()
+          avg_latency = sum(latencies) / total_count if total_count > 0 else 0
+          p95_latency = latencies[int(len(latencies) * 0.95)] if total_count > 0 else 0
+          error_rate = ((total_count - success_count) / total_count) * 100
+
+          # Format the markdown template
+          report_md = f"""
+          ### ⚡ Performance Regression Check Result
+          
+          | Metric | Value | Status |
+          | :--- | :--- | :--- |
+          | **Total Samples** | {total_count} | ℹ️ |
+          | **Average Latency** | {avg_latency:.2f} ms | { '🟢 OK' if avg_latency < 300 else '🔴 HIGH' } |
+          | **95th Percentile** | {p95_latency} ms | { '🟢 OK' if p95_latency < 500 else '🔴 SLA VIOLATION' } |
+          | **Error Rate** | {error_rate:.2f}% | { '🟢 0%' if error_rate == 0 else '🔴 FAILING' } |
+          
+          *Threshold rules: p95 must be under 500ms. Error rate must be 0%.*
+          """
+          
+          with open("performance/summary.md", "w") as out:
+              out.write(report_md)
+          EOF
+
+      - name: Comment Performance Summary on Pull Request
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          filePath: performance/summary.md

@@ -6,7 +6,8 @@ on:
    # paths:
     #  - 'apps/payment-service/**' # Path filtering: Triggers ONLY on relevant changes
   workflow_dispatch:  # ← Add this
-  
+permissions:
+  contents: write
 jobs:
   pre-flight:
     runs-on: ubuntu-latest
