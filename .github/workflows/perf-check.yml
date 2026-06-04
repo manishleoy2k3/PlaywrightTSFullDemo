@@ -9,25 +9,40 @@ on:
       - 'performance/**'
   workflow_dispatch:  # ← Add this
 jobs:
-  performance-benchmark:
+  jmeter-tests:
     runs-on: ubuntu-latest # Change to 'self-hosted' if running on a local machine agent
     
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
       - name: Set up Java Runtime (Required for JMeter)
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: 'gradle'  # Optional: if you use Gradle; remove if not needed
 
-      - name: Install Apache JMeter
+      - name: Cache JMeter Installation
+        id: cache-jmeter
+        uses: actions/cache@v4
+        with:
+          path: ~/.jmeter
+          key: jmeter-${{ runner.os }}-5.6.3
+          restore-keys: |
+            jmeter-${{ runner.os }}-
+
+      - name: Download & Install JMeter (if not cached)
+        if: steps.cache-jmeter.outputs.cache-hit != 'true'
         run: |
-          wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz
-          tar -xzf apache-jmeter-5.6.3.tgz
-          echo "JM_HOME=$GITHUB_WORKSPACE/apache-jmeter-5.6.3" >> $GITHUB_ENV
-          echo "$GITHUB_WORKSPACE/apache-jmeter-5.6.3/bin" >> $GITHUB_PATH
+          mkdir -p ~/.jmeter
+          curl -L https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz -o jmeter.tgz
+          tar -xzf jmeter.tgz -C ~/.jmeter --strip-components=1
+          rm jmeter.tgz
+
+      - name: Set JMeter Environment Variables
+        run: |
+          echo "JM_HOME=$HOME/.jmeter" >> $GITHUB_ENV
+          echo "$HOME/.jmeter/bin" >> $GITHUB_PATH
 
       - name: Execute Headless JMeter Script
         run: |
