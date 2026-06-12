@@ -9,3 +9,6 @@ node_modules/
 /allure-results
 /.DS_Store
 /test-data/.DS_Store
+storage-state/
+.env
+*.json

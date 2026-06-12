@@ -58,7 +58,8 @@ export default defineConfig({
     // },
   },
 
-  // globalSetup: require.resolve('./globals/global-setup'),
+  // Global setup: Runs once before all tests to authenticate users and save storage state
+  globalSetup: require.resolve('./globals/auth-setup'),
   // globalTeardown: require.resolve('./globals/global-teardown'),
 
   /* Configure projects for major browsers */
